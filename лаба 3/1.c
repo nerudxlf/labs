@@ -13,14 +13,14 @@ void main()
 	hstdin = GetStdHandle(STD_INPUT_HANDLE);
 	hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (hstdin == INVALID_HANDLE_VALUE) return;
-	fhandle=CreateFile(fname,  FILE_SHARE_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	fhandle=CreateFile(fname,  GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	if (fhandle == INVALID_HANDLE_VALUE){
 		Error = GetLastError();
 		if(Error == 32){
 			printf("The process cannot access the file because it is being used by another process.\n");
 			while(1){
 				if(fhandle != INVALID_HANDLE_VALUE) break;
-				fhandle=CreateFile(fname,  FILE_SHARE_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+				fhandle=CreateFile(fname,  GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 				rc=ReadFile(fhandle, buffer, 80, &actlen, NULL);
 				WriteFile(hstdout, buffer, actlen, &actlen, NULL);
 			}
